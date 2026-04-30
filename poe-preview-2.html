@@ -1,0 +1,1893 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل التاريخي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Login Page */
+        .login-page {
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5016 50%, #8B4513 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .login-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo i {
+            font-size: 50px;
+            color: #2d5016;
+            margin-bottom: 10px;
+        }
+
+        .login-logo h1 {
+            font-size: 28px;
+            color: #1a3a2a;
+            font-weight: 800;
+        }
+
+        .login-logo p {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+            direction: rtl;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 4px rgba(45,80,22,0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2d5016, #1a3a2a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45,80,22,0.3);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: #2d5016;
+            border: 2px solid #2d5016;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(45,80,22,0.05);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-footer a {
+            color: #2d5016;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab.active {
+            background: #2d5016;
+            color: white;
+        }
+
+        /* Main App */
+        .app-header {
+            background: linear-gradient(135deg, #1a3a2a, #2d5016);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .app-header h2 {
+            color: white;
+            font-size: 18px;
+        }
+
+        .app-header .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .app-header .header-icons i {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .app-header .header-icons i:hover {
+            color: #d4af37;
+        }
+
+        .search-bar {
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 15px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+            direction: rtl;
+            position: relative;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 4px rgba(45,80,22,0.1);
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        /* Map */
+        .map-container {
+            width: 100%;
+            height: 55vh;
+            background: #e8f5e9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 30%, #e8d5b7 60%, #f5e6d3 100%);
+            position: relative;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            animation: bounceIn 0.5s ease;
+        }
+
+        .map-pin:hover {
+            transform: rotate(-45deg) scale(1.2);
+            z-index: 10;
+        }
+
+        .map-pin i {
+            transform: rotate(45deg);
+            color: white;
+            font-size: 14px;
+        }
+
+        .map-pin.brown { background: #8B4513; }
+        .map-pin.red { background: #c0392b; }
+        .map-pin.blue { background: #2980b9; }
+        .map-pin.green { background: #27ae60; }
+
+        @keyframes bounceIn {
+            0% { transform: rotate(-45deg) scale(0); opacity: 0; }
+            60% { transform: rotate(-45deg) scale(1.2); }
+            100% { transform: rotate(-45deg) scale(1); opacity: 1; }
+        }
+
+        .user-location {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #4285f4;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px rgba(66,133,244,0.2), 0 2px 8px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Filters */
+        .filters-bar {
+            padding: 12px 20px;
+            background: white;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #e0e0e0;
+            font-size: 13px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 600;
+            background: white;
+        }
+
+        .filter-chip.active {
+            background: #2d5016;
+            color: white;
+            border-color: #2d5016;
+        }
+
+        .filter-chip:hover {
+            border-color: #2d5016;
+        }
+
+        /* Cards */
+        .nearby-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a3a2a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cards-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .place-card {
+            min-width: 260px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            scroll-snap-align: start;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-image i {
+            font-size: 40px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            font-size: 15px;
+            color: #1a3a2a;
+            margin-bottom: 5px;
+        }
+
+        .card-content p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-distance {
+            font-size: 12px;
+            color: #2d5016;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-btn {
+            padding: 6px 14px;
+            background: #2d5016;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Detail Page */
+        .detail-header {
+            height: 250px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-header i {
+            font-size: 60px;
+            color: white;
+            opacity: 0.5;
+        }
+
+        .detail-back {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .detail-content {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            margin-top: -30px;
+            position: relative;
+            padding: 30px 20px;
+            min-height: 50vh;
+        }
+
+        .detail-content h1 {
+            font-size: 24px;
+            color: #1a3a2a;
+            margin-bottom: 5px;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail-meta span {
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .detail-description {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .detail-timeline {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-timeline h3 {
+            font-size: 16px;
+            color: #1a3a2a;
+            margin-bottom: 15px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: 6px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #2d5016;
+            border-radius: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 22px;
+            width: 2px;
+            height: calc(100% + 5px);
+            background: #e0e0e0;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #2d5016;
+            font-weight: 700;
+            min-width: 60px;
+        }
+
+        .timeline-text {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #2d5016, #1a3a2a);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 90%;
+            width: 360px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification.show {
+            top: 20px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: #2d5016;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon i {
+            color: white;
+            font-size: 16px;
+        }
+
+        .notification-text {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .notification-close {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s;
+            padding: 5px 15px;
+        }
+
+        .nav-item.active {
+            color: #2d5016;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* List Page */
+        .list-container {
+            padding: 15px 20px;
+            padding-bottom: 80px;
+        }
+
+        .list-item {
+            background: white;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .list-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .list-item-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .list-item-icon i {
+            color: white;
+            font-size: 22px;
+        }
+
+        .list-item-content {
+            flex: 1;
+        }
+
+        .list-item-content h4 {
+            font-size: 15px;
+            color: #1a3a2a;
+            margin-bottom: 3px;
+        }
+
+        .list-item-content p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .list-item-distance {
+            font-size: 12px;
+            color: #2d5016;
+            font-weight: 700;
+        }
+
+        /* Region Selector */
+        .region-section {
+            padding: 20px;
+        }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .region-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+
+        .region-card:hover, .region-card.active {
+            border-color: #2d5016;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(45,80,22,0.15);
+        }
+
+        .region-card i {
+            font-size: 28px;
+            color: #2d5016;
+            margin-bottom: 8px;
+        }
+
+        .region-card h4 {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .region-card p {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* Profile */
+        .profile-header {
+            background: linear-gradient(135deg, #1a3a2a, #2d5016);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar i {
+            font-size: 35px;
+            color: white;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .profile-menu {
+            padding: 20px;
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-menu-item:hover {
+            background: #f9f9f9;
+        }
+
+        .profile-menu-item i {
+            font-size: 20px;
+            color: #2d5016;
+            width: 30px;
+            text-align: center;
+        }
+
+        .profile-menu-item span {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .profile-menu-item .arrow {
+            margin-right: auto;
+            color: #ccc;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal h3 {
+            font-size: 18px;
+            color: #1a3a2a;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0 5px;
+            font-size: 14px;
+        }
+
+        .modal-btn.yes {
+            background: #2d5016;
+            color: white;
+        }
+
+        .modal-btn.no {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a3a2a, #2d5016);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-screen h2 {
+            color: white;
+            font-size: 22px;
+        }
+
+        .loading-screen p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <h2>الدليل التاريخي</h2>
+        <p>جاري تحديد موقعك...</p>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-location-dot"></i>
+        </div>
+        <div class="notification-text">
+            أنت بالقرب من <strong>موقع تاريخي مهم</strong>! هل تريد معرفة قصته؟
+        </div>
+        <div class="notification-close" onclick="hideNotification()">✕</div>
+    </div>
+
+    <!-- Login Page -->
+    <div class="page active" id="loginPage">
+        <div class="login-page" style="min-height:100vh;">
+            <div class="login-container">
+                <div class="login-logo">
+                    <i class="fas fa-landmark"></i>
+                    <h1>الدليل التاريخي</h1>
+                    <p>اكتشف تاريخ المملكة العربية السعودية</p>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('login')">تسجيل دخول</div>
+                    <div class="tab" onclick="switchTab('register')">حساب جديد</div>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" placeholder="example@email.com" id="loginEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" placeholder="••••••••" id="loginPassword">
+                    </div>
+                    <button class="btn-primary" onclick="login()">تسجيل الدخول</button>
+                    <button class="btn-secondary" onclick="guestLogin()">الدخول كزائر</button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" style="display:none;">
+                    <div class="form-group">
+                        <label>الاسم الكامل</label>
+                        <input type="text" placeholder="محمد أحمد" id="regName">
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" placeholder="example@email.com" id="regEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" placeholder="••••••••" id="regPassword">
+                    </div>
+                    <div class="form-group">
+                        <label>المنطقة</label>
+                        <input type="text" placeholder="الرياض" id="regRegion">
+                    </div>
+                    <button class="btn-primary" onclick="register()">إنشاء حساب</button>
+                </div>
+
+                <div class="login-footer">
+                    <p>بتسجيلك، أنت توافق على <a>الشروط والأحكام</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div class="page" id="mainPage">
+        <div class="app-header">
+            <h2><i class="fas fa-landmark"></i> الدليل التاريخي</h2>
+            <div class="header-icons">
+                <i class="fas fa-bell" onclick="showNotification()"></i>
+                <i class="fas fa-user" onclick="showPage('profilePage')"></i>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input class="search-input" type="text" placeholder="ابحث عن مدينة، معلم، أو حدث تاريخي..." oninput="searchPlaces(this.value)">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div class="filters-bar">
+            <div class="filter-chip active" onclick="setFilter(this, 'all')">الكل</div>
+            <div class="filter-chip" onclick="setFilter(this, 'islamic')">العصر الإسلامي</div>
+            <div class="filter-chip" onclick="setFilter(this, 'ancient')">قديم</div>
+            <div class="filter-chip" onclick="setFilter(this, 'modern')">حديث</div>
+            <div class="filter-chip" onclick="setFilter(this, 'battle')">معارك</div>
+            <div class="filter-chip" onclick="setFilter(this, 'civilization')">حضارات</div>
+            <div class="filter-chip" onclick="setFilter(this, 'person')">شخصيات</div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-container">
+            <div class="map-bg">
+                <!-- User Location -->
+                <div class="user-location" style="top: 45%; left: 50%;"></div>
+
+                <!-- Pins -->
+                <div class="map-pin brown" style="top: 20%; left: 30%;" onclick="showDetail(0)">
+                    <i class="fas fa-monument"></i>
+                </div>
+                <div class="map-pin red" style="top: 35%; left: 60%;" onclick="showDetail(1)">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="map-pin blue" style="top: 55%; left: 25%;" onclick="showDetail(2)">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="map-pin green" style="top: 70%; left: 70%;" onclick="showDetail(3)">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <div class="map-pin brown" style="top: 25%; left: 75%;" onclick="showDetail(4)">
+                    <i class="fas fa-monument"></i>
+                </div>
+                <div class="map-pin red" style="top: 60%; left: 45%;" onclick="showDetail(5)">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="map-pin blue" style="top: 40%; left: 15%;" onclick="showDetail(6)">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="map-pin green" style="top: 80%; left: 35%;" onclick="showDetail(7)">
+                    <i class="fas fa-mosque"></i>
+                </div>
+
+                <!-- Legend -->
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#8B4513;"></div>
+                        <span>آثار</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#c0392b;"></div>
+                        <span>أحداث</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#2980b9;"></div>
+                        <span>قصص</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:#27ae60;"></div>
+                        <span>مساجد</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nearby Places Cards -->
+        <div class="nearby-section">
+            <div class="section-title">
+                <i class="fas fa-location-dot"></i>
+                أماكن قريبة منك
+            </div>
+            <div class="cards-scroll" id="cardsContainer">
+            </div>
+        </div>
+
+        <!-- Regions -->
+        <div class="region-section">
+            <div class="section-title">
+                <i class="fas fa-map"></i>
+                مناطق المملكة
+            </div>
+            <div class="region-grid" id="regionsGrid">
+            </div>
+        </div>
+
+        <div style="height: 80px;"></div>
+
+        <!-- Bottom Nav -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchNav(this, 'home')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="switchNav(this, 'map')">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>الخريطة</span>
+            </div>
+            <div class="nav-item" onclick="switchNav(this, 'list')">
+                <i class="fas fa-list"></i>
+                <span>القائمة</span>
+            </div>
+            <div class="nav-item" onclick="switchNav(this, 'regions')">
+                <i class="fas fa-globe"></i>
+                <span>المناطق</span>
+            </div>
+            <div class="nav-item" onclick="showPage('profilePage')">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Page -->
+    <div class="page" id="detailPage">
+        <div class="detail-header" id="detailHeader">
+            <i class="fas fa-monument"></i>
+            <div class="detail-back" onclick="showPage('mainPage')">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+        <div class="detail-content" id="detailContent">
+        </div>
+    </div>
+
+    <!-- List Page -->
+    <div class="page" id="listPage">
+        <div class="app-header">
+            <h2><i class="fas fa-list"></i> قائمة المواقع</h2>
+            <div class="header-icons">
+                <i class="fas fa-arrow-right" onclick="showPage('mainPage')"></i>
+            </div>
+        </div>
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input class="search-input" type="text" placeholder="ابحث في القائمة..." oninput="filterList(this.value)">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="list-container" id="listContainer">
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="page" id="profilePage">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-name" id="profileName">زائر</div>
+            <div class="profile-email" id="profileEmail">guest@app.com</div>
+        </div>
+        <div class="profile-menu">
+            <div class="profile-menu-item">
+                <i class="fas fa-heart"></i>
+                <span>المفضلة</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-history"></i>
+                <span>السجل</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-download"></i>
+                <span>المحتوى المحمّل</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-info-circle"></i>
+                <span>عن التطبيق</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+            <div class="profile-menu-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt" style="color:#c0392b;"></i>
+                <span style="color:#c0392b;">تسجيل الخروج</span>
+                <i class="fas fa-chevron-left arrow"></i>
+            </div>
+        </div>
+        <div style="padding: 20px;">
+            <button class="btn-secondary" onclick="showPage('mainPage')" style="border-color:#ccc; color:#666;">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </button>
+        </div>
+    </div>
+
+    <!-- Nearby Alert Modal -->
+    <div class="modal-overlay" id="nearbyModal">
+        <div class="modal">
+            <i class="fas fa-location-dot" style="font-size:40px; color:#2d5016; margin-bottom:15px;"></i>
+            <h3>موقع تاريخي قريب!</h3>
+            <p id="modalText">أنت بالقرب من مدائن صالح. هل تريد معرفة المزيد عن هذا الموقع التاريخي؟</p>
+            <div>
+                <button class="modal-btn yes" onclick="closeModal(); showDetail(0);">نعم، أخبرني</button>
+                <button class="modal-btn no" onclick="closeModal()">لاحقاً</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const historicalPlaces = [
+            {
+                id: 0,
+                name: "مدائن صالح",
+                region: "المدينة المنورة",
+                type: "ancient",
+                category: "آثار",
+                color: "#8B4513",
+                gradient: "linear-gradient(135deg, #8B4513, #D2691E)",
+                icon: "fa-monument",
+                distance: "2.5 كم",
+                description: "مدائن صالح أو الحِجر هي موقع أثري يقع في منطقة المدينة المنورة. كانت تُعرف قديماً بمدينة الحِجر، وهي من أهم المواقع الأثرية في المملكة العربية السعودية. تم تسجيلها كأول موقع تراث عالمي في السعودية ضمن قائمة اليونسكو عام 2008م. تحتوي على 131 واجهة صخرية منحوتة، ومجموعة من المقابر النبطية التي تعود للقرن الأول الميلادي.",
+                era: "القرن الأول قبل الميلاد",
+                events: [
+                    { date: "القرن 1 ق.م", text: "بناء المقابر النبطية" },
+                    { date: "106 م", text: "سقوط مملكة الأنباط" },
+                    { date: "2008 م", text: "تسجيل الموقع في اليونسكو" },
+                    { date: "2020 م", text: "افتتاح المنطقة للسياحة" }
+                ]
+            },
+            {
+                id: 1,
+                name: "معركة بدر",
+                region: "المدينة المنورة",
+                type: "islamic",
+                category: "أحداث",
+                color: "#c0392b",
+                gradient: "linear-gradient(135deg, #c0392b, #e74c3c)",
+                icon: "fa-fire",
+                distance: "15 كم",
+                description: "معركة بدر الكبرى هي أولى المعارك الفاصلة في تاريخ الإسلام، وقعت في 17 رمضان من السنة الثانية للهجرة (13 مارس 624م). انتصر فيها المسلمون بقيادة النبي محمد ﷺ على قريش. كان عدد المسلمين 313 مقاتلاً في مواجهة حوالي 1000 من المشركين. وسُميت المعركة بهذا الاسم نسبة إلى منطقة بدر الواقعة بين مكة والمدينة.",
+                era: "2 هـ - 624 م",
+                events: [
+                    { date: "2 هـ", text: "وقوع المعركة" },
+                    { date: "17 رمضان", text: "انتصار المسلمين" },
+                    { date: "بعد المعركة", text: "تعزيز مكانة المسلمين" }
+                ]
+            },
+            {
+                id: 2,
+                name: "قصر المصمك",
+                region: "الرياض",
+                type: "modern",
+                category: "قصص",
+                color: "#2980b9",
+                gradient: "linear-gradient(135deg, #2980b9, #3498db)",
+                icon: "fa-book",
+                distance: "800 م",
+                description: "قصر المصمك هو حصن مبني من الطوب الطيني يقع في وسط مدينة الرياض. بُني عام 1865م في عهد الإمام عبدالله بن فيصل بن تركي. يُعد من أهم المعالم التاريخية في المملكة لارتباطه بملحمة فتح الرياض على يد الملك عبدالعزيز آل سعود في 15 يناير 1902م، والتي كانت بداية تأسيس المملكة العربية السعودية.",
+                era: "1902 م",
+                events: [
+                    { date: "1865 م", text: "بناء القصر" },
+                    { date: "1902 م", text: "فتح الرياض" },
+                    { date: "1995 م", text: "تحويله إلى متحف" }
+                ]
+            },
+            {
+                id: 3,
+                name: "المسجد النبوي",
+                region: "المدينة المنورة",
+                type: "islamic",
+                category: "مساجد",
+                color: "#27ae60",
+                gradient: "linear-gradient(135deg, #27ae60, #2ecc71)",
+                icon: "fa-mosque",
+                distance: "5 كم",
+                description: "المسجد النبوي الشريف هو ثاني أقدس مسجد في الإسلام بعد المسجد الحرام. بناه النبي محمد ﷺ عند هجرته إلى المدينة المنورة عام 622م. يضم الروضة الشريفة والحجرة النبوية التي دُفن فيها النبي ﷺ وصاحباه أبو بكر وعمر رضي الله عنهما. مر بعدة توسعات عبر التاريخ حتى وصل لمساحته الحالية.",
+                era: "1 هـ - 622 م",
+                events: [
+                    { date: "1 هـ", text: "بناء المسجد" },
+                    { date: "7 هـ", text: "أول توسعة" },
+                    { date: "1994 م", text: "التوسعة السعودية الكبرى" }
+                ]
+            },
+            {
+                id: 4,
+                name: "الدرعية التاريخية",
+                region: "الرياض",
+                type: "modern",
+                category: "آثار",
+                color: "#8B4513",
+                gradient: "linear-gradient(135deg, #8B4513, #A0522D)",
+                icon: "fa-monument",
+                distance: "12 كم",
+                description: "الدرعية هي عاصمة الدولة السعودية الأولى، تأسست عام 1446م. تقع على ضفاف وادي حنيفة شمال غرب الرياض. حي الطريف فيها مسجل ضمن مواقع التراث العالمي لليونسكو. شهدت أحداثاً تاريخية مهمة منها قيام الدولة السعودية الأولى وحصارها عام 1818م.",
+                era: "1446 م",
+                events: [
+                    { date: "1446 م", text: "تأسيس الدرعية" },
+                    { date: "1744 م", text: "قيام الدولة السعودية الأولى" },
+                    { date: "1818 م", text: "سقوط الدرعية" },
+                    { date: "2010 م", text: "تسجيلها في اليونسكو" }
+                ]
+            },
+            {
+                id: 5,
+                name: "غزوة الخندق",
+                region: "المدينة المنورة",
+                type: "islamic",
+                category: "أحداث",
+                color: "#c0392b",
+                gradient: "linear-gradient(135deg, #c0392b, #922B21)",
+                icon: "fa-fire",
+                distance: "8 كم",
+                description: "غزوة الخندق (الأحزاب) وقعت في شوال من السنة الخامسة للهجرة. حاصر فيها المشركون واليهود المدينة المنورة بجيش قوامه 10,000 مقاتل. اقترح سلمان الفارسي حفر خندق حول المدينة وهو أسلوب لم يكن معروفاً عند العرب. انتهت بانسحاب الأحزاب دون قتال كبير.",
+                era: "5 هـ - 627 م",
+                events: [
+                    { date: "شوال 5 هـ", text: "بداية الحصار" },
+                    { date: "أثناء الحصار", text: "حفر الخندق" },
+                    { date: "نهاية الحصار", text: "انسحاب الأحزاب" }
+                ]
+            },
+            {
+                id: 6,
+                name: "جدة التاريخية",
+                region: "مكة المكرمة",
+                type: "islamic",
+                category: "قصص",
+                color: "#2980b9",
+                gradient: "linear-gradient(135deg, #2980b9, #1A5276)",
+                icon: "fa-book",
+                distance: "3 كم",
+                description: "جدة التاريخية (البلد) هي منطقة تاريخية تقع في وسط مدينة جدة. يعود تاريخها إلى عصر ما قبل الإسلام. أصبحت ميناءً رئيسياً لمكة المكرمة في عهد الخليفة عثمان بن عفان. تتميز بمبانيها ذات الطراز المعماري الحجازي الفريد والرواشين الخشبية. مسجلة في قائمة التراث العالمي لليونسكو عام 2014م.",
+                era: "646 م",
+                events: [
+                    { date: "646 م", text: "اتخاذها ميناءً لمكة" },
+                    { date: "القرن 12", text: "بناء السور" },
+                    { date: "2014 م", text: "تسجيلها في اليونسكو" }
+                ]
+            },
+            {
+                id: 7,
+                name: "المسجد الحرام",
+                region: "مكة المكرمة",
+                type: "islamic",
+                category: "مساجد",
+                color: "#27ae60",
+                gradient: "linear-gradient(135deg, #27ae60, #1E8449)",
+                icon: "fa-mosque",
+                distance: "20 كم",
+                description: "المسجد الحرام هو أقدس بقعة على وجه الأرض عند المسلمين، يقع في مكة المكرمة ويضم الكعبة المشرفة. هو أول مسجد وُضع في الأرض وقبلة المسلمين في صلاتهم. تبلغ مساحته الحالية أكثر من 356,000 متر مربع ويستوعب أكثر من مليوني مصلٍ. مر بتوسعات عديدة أهمها التوسعة السعودية.",
+                era: "قبل التاريخ",
+                events: [
+                    { date: "قبل التاريخ", text: "بناء الكعبة" },
+                    { date: "630 م", text: "فتح مكة" },
+                    { date: "2015 م", text: "التوسعة السعودية الثالثة" }
+                ]
+            },
+            {
+                id: 8,
+                name: "قلعة تبوك",
+                region: "تبوك",
+                type: "islamic",
+                category: "آثار",
+                color: "#8B4513",
+                gradient: "linear-gradient(135deg, #8B4513, #CD853F)",
+                icon: "fa-monument",
+                distance: "10 كم",
+                description: "قلعة تبوك التاريخية حصن عثماني يعود تاريخه إلى عام 1559م. تقع في وسط مدينة تبوك. كانت إحدى محطات طريق الحج الشامي. رُممت عدة مرات وتُعد من أبرز معالم المنطقة. ترتبط المنطقة بغزوة تبوك عام 9 هـ.",
+                era: "1559 م",
+                events: [
+                    { date: "9 هـ", text: "غزوة تبوك" },
+                    { date: "1559 م", text: "بناء القلعة" },
+                    { date: "1992 م", text: "الترميم الأخير" }
+                ]
+            },
+            {
+                id: 9,
+                name: "واحة الأحساء",
+                region: "الشرقية",
+                type: "ancient",
+                category: "حضارات",
+                color: "#27ae60",
+                gradient: "linear-gradient(135deg, #16a085, #1abc9c)",
+                icon: "fa-tree",
+                distance: "30 كم",
+                description: "واحة الأحساء هي أكبر واحة نخيل في العالم، تضم أكثر من 2.5 مليون نخلة. يعود تاريخ الاستيطان فيها إلى 5000 سنة قبل الميلاد. سُجلت في قائمة التراث العالمي لليونسكو عام 2018م. تضم العديد من المعالم التاريخية مثل قصر إبراهيم وسوق القيصرية.",
+                era: "5000 ق.م",
+                events: [
+                    { date: "5000 ق.م", text: "أول استيطان" },
+                    { date: "1550 م", text: "بناء قصر إبراهيم" },
+                    { date: "2018 م", text: "تسجيلها في اليونسكو" }
+                ]
+            },
+            {
+                id: 10,
+                name: "رجال ألمع",
+                region: "عسير",
+                type: "ancient",
+                category: "قصص",
+                color: "#2980b9",
+                gradient: "linear-gradient(135deg, #8e44ad, #9b59b6)",
+                icon: "fa-book",
+                distance: "45 كم",
+                description: "قرية رجال ألمع التراثية تقع في منطقة عسير جنوب غرب المملكة. تتميز بمبانيها الحجرية المتعددة الطوابق المزينة بالألوان الزاهية. يعود تاريخها إلى أكثر من 400 عام. تضم متحفاً للآثار والتراث. سُجلت في القائمة المؤقتة للتراث العالمي.",
+                era: "القرن 16 م",
+                events: [
+                    { date: "القرن 16", text: "بناء القرية" },
+                    { date: "2018 م", text: "جائزة الأمير سلطان" },
+                    { date: "2021 م", text: "ترشيح اليونسكو" }
+                ]
+            },
+            {
+                id: 11,
+                name: "حائل - جبل أجا وسلمى",
+                region: "حائل",
+                type: "ancient",
+                category: "حضارات",
+                color: "#8B4513",
+                gradient: "linear-gradient(135deg, #795548, #A1887F)",
+                icon: "fa-mountain",
+                distance: "50 كم",
+                description: "منطقة حائل تضم نقوش صخرية يعود تاريخها إلى 10,000 سنة. جبال أجا وسلمى من أشهر المعالم الجغرافية في الجزيرة العربية وترتبط بقصص عربية قديمة. المنطقة غنية بالآثار من العصر الحجري والنقوش الثمودية واللحيانية.",
+                era: "10,000 ق.م",
+                events: [
+                    { date: "10,000 ق.م", text: "أقدم النقوش الصخرية" },
+                    { date: "القرن 6 ق.م", text: "الاستيطان الثمودي" },
+                    { date: "2015 م", text: "تسجيل النقوش في اليونسكو" }
+                ]
+            }
+        ];
+
+        const regions = [
+            { name: "الرياض", icon: "fa-city", count: 45 },
+            { name: "مكة المكرمة", icon: "fa-kaaba", count: 62 },
+            { name: "المدينة المنورة", icon: "fa-mosque", count: 38 },
+            { name: "الشرقية", icon: "fa-oil-well", count: 28 },
+            { name: "عسير", icon: "fa-mountain", count: 22 },
+            { name: "تبوك", icon: "fa-fort-awesome", count: 15 },
+            { name: "حائل", icon: "fa-mountain-sun", count: 18 },
+            { name: "القصيم", icon: "fa-wheat-awn", count: 20 },
+            { name: "الجوف", icon: "fa-archway", count: 12 },
+            { name: "جازان", icon: "fa-water", count: 14 },
+            { name: "نجران", icon: "fa-landmark-dome", count: 16 },
+            { name: "الباحة", icon: "fa-tree", count: 10 },
+            { name: "الحدود الشمالية", icon: "fa-compass", count: 8 }
+        ];
+
+        // Initialize
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hide');
+            }, 2000);
+            renderCards();
+            renderRegions();
+            renderList();
+        };
+
+        // Auth Functions
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('registerForm').style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+            }
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            if (email) {
+                document.getElementById('profileName').textContent = email.split('@')[0];
+                document.getElementById('profileEmail').textContent = email;
+            }
+            showPage('mainPage');
+            setTimeout(showNotification, 3000);
+        }
+
+        function register() {
+            const name = document.getElementById('regName').value || 'مستخدم';
+            const email = document.getElementById('regEmail').value || 'user@app.com';
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileEmail').textContent = email;
+            showPage('mainPage');
+            setTimeout(showNotification, 3000);
+        }
+
+        function guestLogin() {
+            showPage('mainPage');
+            setTimeout(showNotification, 3000);
+        }
+
+        function logout() {
+            showPage('loginPage');
+        }
+
+        // Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function switchNav(el, section) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+            
+            if (section === 'list') {
+                showPage('listPage');
+            } else if (section === 'home' || section === 'map' || section === 'regions') {
+                showPage('mainPage');
+            }
+        }
+
+        // Render Functions
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = historicalPlaces.slice(0, 8).map((place, i) => `
+                <div class="place-card" onclick="showDetail(${place.id})">
+                    <div class="card-image" style="background: ${place.gradient};">
+                        <i class="fas ${place.icon}"></i>
+                        <div class="card-badge">${place.category}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${place.name}</h3>
+                        <p>${place.region}</p>
+                        <div class="card-footer">
+                            <span class="card-distance"><i class="fas fa-location-dot"></i> ${place.distance}</span>
+                            <button class="card-btn">عرض</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRegions() {
+            const grid = document.getElementById('regionsGrid');
+            grid.innerHTML = regions.map(r => `
+                <div class="region-card" onclick="filterByRegion('${r.name}')">
+                    <i class="fas ${r.icon}"></i>
+                    <h4>${r.name}</h4>
+                    <p>${r.count} موقع</p>
+                </div>
+            `).join('');
+        }
+
+        function renderList(filter = '') {
+            const container = document.getElementById('listContainer');
+            let places = historicalPlaces;
+            if (filter) {
+                places = places.filter(p => 
+                    p.name.includes(filter) || 
+                    p.region.includes(filter) || 
+                    p.description.includes(filter)
+                );
+            }
+            container.innerHTML = places.map(place => `
+                <div class="list-item" onclick="showDetail(${place.id})">
+                    <div class="list-item-icon" style="background: ${place.gradient};">
+                        <i class="fas ${place.icon}"></i>
+                    </div>
+                    <div class="list-item-content">
+                        <h4>${place.name}</h4>
+                        <p>${place.region} • ${place.category} • ${place.era}</p>
+                    </div>
+                    <span class="list-item-distance">${place.distance}</span>
+                </div>
+            `).join('');
+        }
+
+        // Detail
+        function showDetail(id) {
+            const place = historicalPlaces[id];
+            if (!place) return;
+            
+            document.getElementById('detailHeader').style.background = place.gradient;
+            document.getElementById('detailHeader').innerHTML = `
+                <i class="fas ${place.icon}"></i>
+                <div class="detail-back" onclick="showPage('mainPage')">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            `;
+            
+            const timelineHTML = place.events.map(e => `
+                <div class="timeline-item">
+                    <span class="timeline-date">${e.date}</span>
+                    <span class="timeline-text">${e.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('detailContent').innerHTML = `
+                <h1>${place.name}</h1>
+                <div class="detail-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> ${place.region}</span>
+                    <span><i class="fas fa-clock"></i> ${place.era}</span>
+                    <span><i class="fas fa-tag"></i> ${place.category}</span>
+                </div>
+                <p class="detail-description">${place.description}</p>
+                <div class="detail-timeline">
+                    <h3><i class="fas fa-timeline"></i> الخط الزمني</h3>
+                    ${timelineHTML}
+                </div>
+                <div class="detail-actions">
+                    <button class="action-btn primary" onclick="speak('${place.name}. ${place.description.substring(0, 200)}')">
+                        <i class="fas fa-volume-up"></i> استمع للقصة
+                    </button>
+                    <button class="action-btn secondary">
+                        <i class="fas fa-directions"></i> انتقل للموقع
+                    </button>
+                </div>
+            `;
+            
+            showPage('detailPage');
+        }
+
+        // Search & Filter
+        function searchPlaces(query) {
+            if (!query) {
+                renderCards();
+                return;
+            }
+            const filtered = historicalPlaces.filter(p => 
+                p.name.includes(query) || 
+                p.region.includes(query) || 
+                p.category.includes(query)
+            );
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = filtered.map(place => `
+                <div class="place-card" onclick="showDetail(${place.id})">
+                    <div class="card-image" style="background: ${place.gradient};">
+                        <i class="fas ${place.icon}"></i>
+                        <div class="card-badge">${place.category}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${place.name}</h3>
+                        <p>${place.region}</p>
+                        <div class="card-footer">
+                            <span class="card-distance"><i class="fas fa-location-dot"></i> ${place.distance}</span>
+                            <button class="card-btn">عرض</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setFilter(el, type) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            
+            if (type === 'all') {
+                renderCards();
+                return;
+            }
+            const filtered = historicalPlaces.filter(p => p.type === type || p.category === type);
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = filtered.map(place => `
+                <div class="place-card" onclick="showDetail(${place.id})">
+                    <div class="card-image" style="background: ${place.gradient};">
+                        <i class="fas ${place.icon}"></i>
+                        <div class="card-badge">${place.category}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${place.name}</h3>
+                        <p>${place.region}</p>
+                        <div class="card-footer">
+                            <span class="card-distance"><i class="fas fa-location-dot"></i> ${place.distance}</span>
+                            <button class="card-btn">عرض</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterByRegion(region) {
+            const filtered = historicalPlaces.filter(p => p.region === region);
+            const container = document.getElementById('cardsContainer');
+            if (filtered.length > 0) {
+                container.innerHTML = filtered.map(place => `
+                    <div class="place-card" onclick="showDetail(${place.id})">
+                        <div class="card-image" style="background: ${place.gradient};">
+                            <i class="fas ${place.icon}"></i>
+                            <div class="card-badge">${place.category}</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>${place.name}</h3>
+                            <p>${place.region}</p>
+                            <div class="card-footer">
+                                <span class="card-distance"><i class="fas fa-location-dot"></i> ${place.distance}</span>
+                                <button class="card-btn">عرض</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filterList(query) {
+            renderList(query);
+        }
+
+        // Notifications
+        function showNotification() {
+            document.getElementById('notification').classList.add('show');
+            setTimeout(hideNotification, 6000);
+        }
+
+        function hideNotification() {
+            document.getElementById('notification').classList.remove('show');
+        }
+
+        function closeModal() {
+            document.getElementById('nearbyModal').classList.remove('show');
+        }
+
+        // Text to Speech
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+
+
+</body></html>
